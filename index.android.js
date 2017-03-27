@@ -5,8 +5,13 @@
  */
 
 import React, { Component } from 'react';
-import { AppRegistry, Navigator, View, Text} from 'react-native';
-import LandingScene from './components/LandingScene';
+import { AppRegistry, Navigator, View, Text } from 'react-native';
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import userReducers from './src/reducers/user';
+import LandingScene from './src/components/LandingScene';
+
+let store = createStore(combineReducers({ userReducers }));
 
 class MyUpdater extends Component {
   render() {
@@ -35,4 +40,14 @@ class MyUpdater extends Component {
   }
 }
 
-AppRegistry.registerComponent('AwesomeProject', () => MyUpdater);
+class upd8r extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <MyUpdater/>
+      </Provider>
+    );
+  }
+}
+
+AppRegistry.registerComponent('AwesomeProject', () => upd8r);
