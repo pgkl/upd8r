@@ -1,11 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { StyleSheet, View, Text, Button, TextInput, ToastAndroid } from 'react-native';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as AppActions from '../actions';
-
-//function mapStateToProps(state) { return { user: state.user.user }; }
-//function mapDispatchToProps(dispatch) { return bindActionCreators(Actions, dispatch) }
+import { StyleSheet, View, Text, Button, TextInput } from 'react-native';
 
 export default class LoginForm extends Component {
     constructor() {
@@ -19,7 +13,8 @@ export default class LoginForm extends Component {
     }
 
     login() {
-        this.props.login({ username: this.state.username, password: this.state.password });
+        console.log(this.props);
+        this.props.onLoginClick(this.state.username, this.state.password);
     }
 
     validate(state) {
@@ -55,13 +50,13 @@ export default class LoginForm extends Component {
                     value={this.state.password}
                     onChangeText={(text) => this.onFieldChange('password', text)} />
                 <View>
-                    {this.props.user.loggedIn !== true && <Button
+                    <Button
                         onPress={this.login.bind(this)}
                         title={this.state.valid === true ? 'Login' : 'Details Invalid'}
                         color="#533747"
                         accessibilityLabel="Learn more about this purple button"
                         disabled={!this.state.valid}
-                    />}
+                    />
                 </View>
             </View>
         )
@@ -78,5 +73,3 @@ const styles = StyleSheet.create({
         borderRadius: 4
     }
 });
-
-//export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

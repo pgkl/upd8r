@@ -12,7 +12,7 @@ const ReduxRouter = connect()(Router);
 const store = createStore(combineReducers({ routes, user }));
 
 const scenes = Actions.create(
-  <Scene key='root'>
+  <Scene key='root' hideNavBar={true}>
     <Scene key='login' component={connect()(Login)} title='Login' />
     <Scene key='home' component={connect()(Home)} title='Home' />
   </Scene>
