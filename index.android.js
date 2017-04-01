@@ -1,53 +1,34 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
-import { AppRegistry, Navigator, View, Text } from 'react-native';
+import { AppRegistry } from 'react-native';
+import { Scene, Router, Actions } from 'react-native-router-flux';
 import { createStore, combineReducers } from 'redux';
-import { Provider } from 'react-redux';
-import userReducers from './src/reducers/user';
-import LandingScene from './src/components/LandingScene';
+import { Provider, connect } from 'react-redux';
+import routes from './src/reducers/routes';
+import user from './src/reducers/user';
+import Login from './src/components/Login';
+import Home from './src/components/Home';
 
-let store = createStore(combineReducers({ userReducers }));
+const ReduxRouter = connect()(Router);
+const store = createStore(combineReducers({ routes, user }));
+
+const scenes = Actions.create(
+  <Scene key='root'>
+    <Scene key='login' component={connect()(Login)} title='Login' />
+    <Scene key='home' component={connect()(Home)} title='Home' />
+  </Scene>
+);
 
 class MyUpdater extends Component {
-  render() {
-    return (
-      <Navigator
-        initialRoute={{ title: 'Landing Scene', index: 0 }}
-        renderScene={(route, navigator) => {
-          return (<LandingScene
-            appName={route.title}
-            onForward={() => {
-              const nextIndex = route.index + 1;
-              navigator.push({
-                title: 'Scene' + nextIndex,
-                index: nextIndex
-              });
-            }}
-            onBack={() => {
-              if (route.index > 0) {
-                navigator.pop();
-              }
-            }}
-          />);
-        }}
-      />
-    );
+  constructor(props){
+    super(props);
   }
-}
-
-class upd8r extends Component {
   render() {
     return (
-      <Provider store={store}>
-        <MyUpdater/>
+      <Provider store={store} >
+        <ReduxRouter scenes={scenes}/>
       </Provider>
     );
   }
 }
 
-AppRegistry.registerComponent('AwesomeProject', () => upd8r);
+AppRegistry.registerComponent('AwesomeProject', () => MyUpdater);

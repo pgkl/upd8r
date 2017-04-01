@@ -2,12 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import { StyleSheet, View, Text, Button, TextInput, ToastAndroid } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as Actions from '../actions';
+import * as AppActions from '../actions';
 
-function mapStateToProps(state) { return { user: state.userReducers.user }; }
-function mapDispatchToProps(dispatch) { return bindActionCreators(Actions, dispatch) }
+//function mapStateToProps(state) { return { user: state.user.user }; }
+//function mapDispatchToProps(dispatch) { return bindActionCreators(Actions, dispatch) }
 
-class LoginForm extends Component {
+export default class LoginForm extends Component {
     constructor() {
         super();
         this.state = {
@@ -79,4 +79,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+//export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
